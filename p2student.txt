@@ -1,0 +1,114 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+ap=pd.read_csv("ACDEMIC_PERFORMNANCE.csv")
+ap.head()
+
+ap=pd.read_csv("ACDEMIC_PERFORMNANCE.csv")
+ap.isnull()
+
+series = pd.notnull(ap["Math score"])
+ap[series]
+
+series1 = pd.notnull(ap["Math score"])
+ap[series1]
+
+ap=pd.read_csv("ACDEMIC_PERFORMNANCE.csv")
+ap.notnull()
+
+ap=pd.read_csv("ACDEMIC_PERFORMNANCE.csv")
+nap=ap
+nap.fillna(0)
+
+m_v=ap['Math score'].mean()
+ap['Math score'].fillna(value=m_v, inplace=True)
+ap
+
+nap.replace(to_replace = np.nan, value = 100)
+
+nap.dropna(how = 'all')
+
+nap.dropna(axis = 1)
+
+new_data = nap.dropna (axis = 0, how ='any')
+
+col = ['Math score', 'Reading Score','placement score']
+ap.boxplot(col)
+
+print(ap.where(ap['Math score']>90))
+print(ap.where(ap['Reading score']>25))
+print(ap.where(ap['placement score']<30))
+
+print(np.where((ap['placement score']<50) & (ap['placement offer count']>1)))
+print(np.where((ap['placement score']>85) & (ap['placement offer count']<3)))
+
+import numpy as np
+from scipy import stats
+
+z = np.abs(stats.zscore(ap['Math score']))
+
+print(z)
+
+threshold = 0.18
+
+sample_outliers = np.where(z < threshold)
+sample_outliers
+
+sorted_rscore= sorted(ap['Math score'])
+sorted_rscore
+q1 = np.percentile(sorted_rscore, 25)
+q3 = np.percentile(sorted_rscore, 75)
+print(q1,q3)
+
+IQR =q3-q1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

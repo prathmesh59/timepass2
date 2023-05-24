@@ -1,0 +1,44 @@
+import pandas as pd
+import numpy as np
+df=pd.read_csv("/home/student/Desktop/COTB45/LAB10/IRIS.csv")
+df
+
+df.mean()
+
+df.mode()
+
+df.std()
+
+df.var()
+
+df.max()
+
+df.min()
+
+df.head()
+
+import matplotlib.pyplot as plt
+df=pd.read_csv("/home/student/Desktop/COTB45/LAB10/IRIS.csv")
+df['sepal_width'].plot(kind = 'hist')
+plt.show()
+
+
+col = ['sepal_length', 'sepal_width' , 'petal_length','petal_width']
+df.boxplot(col)
+plt.show()
+
+df=pd.read_csv("/home/student/Desktop/COTB45/LAB10/IRIS.csv")
+df_min, df_max = df.min(), df.max()
+from numpy import percentile
+from numpy.random import rand
+# generate data sample
+df = rand(1000)
+# calculate quartiles
+quartiles = percentile(df, [25, 50, 75])
+# calculate min/max
+df_min, df_max = df.min(), df.max()
+print('Min: %.3f' % df_min)
+print('Q1: %.3f' % quartiles[0])
+print('Median: %.3f' % quartiles[1])
+print('Q3: %.3f' % quartiles[2])
+print('Max: %.3f' % df_max)

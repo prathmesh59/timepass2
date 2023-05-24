@@ -1,0 +1,60 @@
+
+download spark fro the apache spark framework then create folder by name
+ spark in the home directory then move downloaded spark file to that spark folder
+then go to the terminal 
+/*************extract spark*************/
+java --version
+
+cd spark
+
+///////////for extracting///////////
+
+tar -xvzf spark-3.1.1-bin-hadoop2.7.tgz
+ //////////////setup spark environment ////////////////
+
+gedit ~/.bashrc
+//////////////then it will open bashrc file then go to end of the file and paste below line
+ //in tha command we have to change our username to the system username
+....check system's username by the " whoami" and paste this usernmae with that and check hadoop version to o then save the file//////////
+SPARK_HOME=/home/username/spark/spark-3.2.1-bin-hadoop3.2
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+/////finish the installation by using the source command//////////////////
+source ~/.bashrc
+
+//////////////verify the installation////////////
+spark-shell
+//////////////
+
+
+
+
+
+
+
+
+
+
+/******************main Program command on spark**************/
+scalac program.scala
+
+scala Sample
+
+scala Sample
+
+
+
+/*****************************************************************************/
+/****save as program.scala  in the spark folder********/
+
+object Sample{ 
+ def main(args:Array[String]){ 
+ var num:Int = 0;
+ print("Enter number:")
+ num=scala.io.StdIn.readInt()
+ if(num>=0)
+ println("Number is POSITIVE")
+ else
+ println("Number is NEGATIVE")
+ }
+}

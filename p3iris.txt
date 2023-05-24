@@ -1,0 +1,116 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df=pd.read_csv("iris.csv")
+df.head(16)
+
+df.mean()
+
+df.loc[:,'4'].mean()
+
+df.mean(axis=1)[0:4]
+
+df.median()
+
+df.loc[:,'4'].median()
+
+df.median(axis=1)[0:4]
+
+df.mode()
+
+df.loc[:,'4'].mode()
+
+df.min()
+
+df.loc[:,'4'].min(skipna = False)
+
+df.max()
+
+df.loc[:,'4'].min(skipna = False)
+
+df.std()
+
+df.loc[:,'4'].std()
+
+df.std(axis=1)[0:4]
+
+df.groupby(['150'])['4'].mean()
+
+df_u=df.rename(columns= {'setosa$)':'setosa'},inplace=False)
+
+(df_u.groupby(['150']).setosa.mean())
+
+from sklearn import preprocessing
+enc = preprocessing.OneHotEncoder()
+enc_df = pd.DataFrame(enc.fit_transform(df[['150']]).toarray())
+enc_df
+
+df_encode =df_u.join(enc_df)
+df_encode
+
+csv_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+
+col_names =['150','4','setosa','versicolor','virginica']
+
+iris = pd.read_csv(csv_url, names = col_names)
+
+irisSet = (iris['virginica']== 'Iris-setosa')
+
+irisVer = (iris['virginica']== 'Iris-versicolor')
+
+print('Iris-versicolor')
+
+print(iris[irisVer].describe())
+
+irisVir = (iris['virginica']== 'Iris-virginica')
+
+print('150')
+print(iris[irisSet].describe())
+
+print('Iris-virginica')
+print(iris[irisVir].describe())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,133 @@
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv("iris.csv")
+
+df.head()
+
+df.mean()
+
+df.loc[:,'sepal_width'].mean()
+
+df.mean(axis=1)[0:4]
+
+df.median()
+
+df.loc[:,'sepal_width'].median()
+
+df.median(axis=1)[0:4]
+
+df.mode()
+
+df.loc[:,'sepal_length'].mode()
+
+df.min()
+
+df.loc[:,'petal_width'].min(skipna = False)
+
+df.max()
+
+df.loc[:,'petal_length'].min(skipna = False)
+
+df.std()
+
+df.loc[:,'sepal_width'].std()
+
+df.std(axis=1)[0:4]
+
+df.groupby(['species'])['sepal_length'].mean()
+
+df_u=df.rename(columns= {'sepal_width':'Sepal_width'},inplace=False)
+(df_u.groupby(['species']).Sepal_width.mean())
+
+from sklearn import preprocessing
+enc = preprocessing.OneHotEncoder()
+enc_df = pd.DataFrame(enc.fit_transform(df[['sepal_length']]).toarray())
+enc_df
+df_encode =df_u.join(enc_df)
+df_encode
+
+csv_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+col_names = ['sepal_length','sepal_width','petal_length','petal_width','species']
+iris = pd.read_csv(csv_url, names = col_names)
+irisSet = (iris['species']== 'Iris-setosa')
+print('Iris-setosa')
+print(iris[irisSet].describe())
+
+irisVer = (iris['species']== 'Iris-versicolor')
+print('Iris-versicolor')
+print(iris[irisVer].describe())
+
+irisVir = (iris['species']== 'Iris-virginica')
+print('Iris-virginica')
+print(iris[irisVir].describe())
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv("employee_data.csv")
+
+df.head()
+
+df.mean()
+
+df.loc[:,'age'].mean()
+
+df.mean(axis=1)[0:4]
+
+df.median()
+
+df.loc[:,'salary'].median()
+
+df.median(axis=1)[0:4]
+
+df.mode()
+
+df.loc[:,'age'].mode()
+
+df.min()
+
+df.loc[:,'age'].min(skipna = False)
+
+df.max()
+
+df.loc[:,'salary'].min(skipna = False)
+
+df.std()
+
+df.loc[:,'age'].std()
+
+df.std(axis=1)[0:4]
+
+df.groupby(['groups'])['salary'].mean()
+
+df_u=df.rename(columns= {'salary':'income'},inplace=False)
+(df_u.groupby(['groups']).income.mean())
+
+from sklearn import preprocessing
+enc = preprocessing.LabelEncoder()
+df['groups'] = enc.fit_transform(df['groups'])
+df1=df
+df
+
+from sklearn import preprocessing
+enc = preprocessing.OneHotEncoder()
+enc_df = pd.DataFrame(enc.fit_transform(df[['groups']]).toarray())
+df_encode =df_u.join(enc_df)
+df_encode
+
+iris = pd.read_csv("iris.csv")
+iris.head()
+
+irisSet = (iris['species']== 'setosa')
+print('setosa')
+print(iris[irisSet].describe())
+
+irisVer = (iris['species']== 'versicolor')
+print('versicolor')
+print(iris[irisVer].describe())
+
+irisVir = (iris['species']== 'virginica')
+print('virginica')
+print(iris[irisVir].describe())
