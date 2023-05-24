@@ -1,0 +1,4 @@
+1 hadoop version
+
+2 javac -version
+

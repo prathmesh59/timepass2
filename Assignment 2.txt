@@ -1,0 +1,165 @@
+4 df=pd.read_csv
+
+5 df						// show all values of rows and columns
+
+6 df.isnull()				// checking if there any value who have null value
+
+7 series = pd.isnull(df["Maths Score"])	// ithe apn series madhe jya null value aahet tya store kelya maths score cha use karun ani nantr print kely
+  df[series]
+
+8 df.notnull()
+
+9 series1 = pd.notnull(df["Maths Score"])
+  df[series1]
+
+10 from sklearn.preprocessing import LabelEncoder	//Encode target labels with value between 0 and n_classes-1.
+  le = LabelEncoder()						//LabelEncoder can be used to normalize labels.
+  df['Gender'] = le.fit_transform(df['Gender'])  	//fit_transform(y) = Fit label encoder and return encoded labels.
+  newdf=df
+  df
+
+11 missing_values = ["Na", "na"]				//For replacing null values with NaN
+  df = pd.read_csv("StudentPerformance.csv", na_values = missing_values)
+  df
+
+12 ndf=df
+   ndf.fillna(0)
+  for reference https://www.geeksforgeeks.org/python-pandas-dataframe-fillna-to-replace-null-values-in-dataframe/
+
+13 ndf=df
+   ndf.fillna(1)
+
+14 nahi kalale
+
+15 m_v=df['Maths Score'].mean()				// apan maths score che mean kadhale 
+   df['Maths Score'].fillna(value=m_v, inplace=True)	// jithe null aahe tithe mean place kele
+   df
+
+16 ndf.replace(to_replace = np.nan, value = -99)      // replacing nan with -99
+   for reference https://www.skytowner.com/explore/replacing_values_with_nans_in_pandas_dataframe
+
+17 ndf.dropna()
+   The dropna() method removes the rows that contains NULL values.
+
+18 ndf.dropna(how = 'all')
+
+19 ndf.dropna(axis = 1)
+
+20 new_data = ndf.dropna(axis = 0, how ='any')
+   new_data
+
+for 18 - 20  refer https://www.w3schools.com/python/pandas/ref_df_dropna.asp#:~:text=The%20dropna()%20method%20removes,in%20the%20original%20DataFrame%20instead.
+
+BOXPLOT:-
+A Box Plot is also known as Whisker plot is created to display the summary of the set of data values having properties like minimum, first quartile, median, third quartile and maximum. In the box plot, a box is created from the first quartile to the third quartile, a vertical line is also there which goes through the box at the median. Here x-axis denotes the data to be plotted while the y-axis shows the frequency distribution.
+
+21 col = ['Maths Score', 'Reading Score' , 'Writing Score','Placement Score']
+   df.boxplot(col)
+
+22 print(np.where(df['Maths Score']>90))
+   print(np.where(df['Reading Score']<25))
+   print(np.where(df['Writing Score']<30))
+
+
+OUTLIER
+When exploring data, the outliers are the extreme values within the dataset. That means the outlier data points vary greatly from the expected values—either being much larger or significantly smaller. For data that follows a normal distribution, the values that fall more than three standard deviations from the mean are typically considered outliers. 
+
+Outliers can find their way into a dataset naturally through variability, or they can be the result of issues like human error, faulty equipment, or poor sampling. Regardless of how they get into the data, outliers can have a big impact on statistical analysis and machine learning because they impact calculations like mean and standard deviation, and they can skew hypothesis tests. A data analyst should use various techniques to visualize and identify outliers before deciding whether they should be dropped, kept, or modified. 
+
+SCATTERPLOT
+A Scatter plot is a type of data visualization technique that shows the relationship between two numerical variables. For plotting to scatter plot using pandas there is DataFrame class and this class has a member called plot. Calling the scatter() method on the plot member draws a plot between two variables or two columns of pandas DataFrame.
+
+23 import matplotlib.pyplot as plt
+   fig, ax = plt.subplots(figsize = (18,10))
+
+26 ax.scatter(df['Placement Score'], df['Placement Offer Count'])
+   plt.show()
+   ax.set_xlabel('(Proportion non-retail business acres)/(town)')
+   ax.set_ylabel('(Full-value property-tax rate)/($10,000)')  
+
+27 print(np.where((df['Placement Score']<50) & (df['Placement Offer Count']>1)))
+   print(np.where((df['Placement Score']>85) & (df['Placement Offer Count']<3)))
+
+
+Z SCORE
+Z score is also called standard score. This score helps to understand if a data value is greater or smaller than mean and how far away it is from the mean. More specifically, Z score tells how many standard deviations away a data point is from the mean.
+
+Z score and Outliers:
+If the z score of a data point is more than 3, it indicates that the data point is quite different from the other data points. Such a data point can be an outlier.
+
+28 import numpy as np
+   from scipy import stats
+
+29 z = np.abs(stats.zscore(df['Maths Score']))
+
+30 print(z)
+
+31 threshold = 0.18
+   
+32 sample_outliers = np.where(z <threshold)
+   sample_outliers
+
+
+INTER QUARTILE RANGE(IQR)
+IQR is used to measure variability by dividing a data set into quartiles. The data is sorted in ascending order and split into 4 equal parts
+GO TO :- https://www.geeksforgeeks.org/interquartile-range-to-detect-outliers-in-data/
+
+
+33 sorted_rscore= sorted(df['Reading Score'])
+
+34 sorted_rscore
+
+35 q1 = np.percentile(sorted_rscore, 25)
+   q3 = np.percentile(sorted_rscore, 75)
+   print(q1,q3)
+
+36 IQR = q3-q1
+
+37 lwr_bound = q1-(1.5*IQR)
+   upr_bound = q3+(1.5*IQR)
+   print(lwr_bound, upr_bound)
+
+38 r_outliers = []
+     for i in sorted_rscore:
+   	  if (i<lwr_bound or i>upr_bound):
+        	r_outliers.append(i)
+	print(r_outliers)
+
+39  new_df=df
+for i in sample_outliers:
+    new_df.drop(i,inplace=True)
+new_df
+
+40 df_stud=df (nahi kalale)
+   ninetieth_percentile = np.percentile(df_stud['Maths Score'], 90)
+   b = np.where(df_stud['Maths Score']>ninetieth_percentile, ninetieth_percentile, df_stud['Maths Score'])
+   print("New array:",b)
+
+58 df_stud.insert(1,"m score",b,True)
+   df_stud
+
+59 col = ['Reading Score']
+   df.boxplot(col)
+   plt.show()
+
+60 median=np.median(sorted_rscore)		//finding median of sorted reading score
+   median
+
+61 refined_df=df
+   refined_df['Reading Score'] = np.where(refined_df['Reading Score'] >upr_bound, median,refined_df['Reading Score'])
+
+62 refined_df
+
+65 col = ['Reading Score']
+   refined_df.boxplot(col)
+   plt.show()
+
+66 new_df['Maths Score'].plot(kind = 'hist')
+   plt.show()
+
+HISTOGRAM
+A histogram is a graphical representation commonly used to visualize the distribution of numerical data. When exploring a dataset, you'll often want to get a quick understanding of the distribution of certain numerical variables within it. You can do this by using a histogram. A histogram divides the values within a numerical variable into “bins”, and counts the number of observations that fall into each bin. By visualizing these binned counts in a columnar fashion, we can obtain a very immediate and intuitive sense of the distribution of values within a variable.
+
+67 df['log_math'] = np.log10(df['Maths Score'])
+df['log_math'].plot(kind = 'hist')
+plt.show()

@@ -1,0 +1,89 @@
+Contingency table or Confusion matrix is often used to measure the performance of classifiers. A confusion matrix contains information about actual and predicted classifications done by a classification system. Performance of such systems is commonly evaluated using the data in the matrix.
+Number of positive (Pos) : Total number instances which are labelled as positive in a given
+dataset.
+● Number of negative (Neg) : Total number instances which are labelled as negative in a given dataset.
+● Number of True Positive (TP) : Number of instances which are actually labelled as positive and the predicted class by classifier is also positive.
+● Number of True Negative (TN) : Number of instances which are actually labelled as negative and the predicted class by classifier is also negative.
+● Number of False Positive (FP) : Number of instances which are actually labelled as negative and the predicted class by classifier is positive.
+● Number of False Negative (FN): Number of instances which are actually labelled as positive and the class predicted by the classifier is negative.
+
+1 import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+2 social=pd.read_csv("Social_Network_Ads.csv")
+
+3 social.head()
+
+4 x=social.iloc[:, [2, 3]].values	This line selects all rows and the columns at index 2 and 3 from the DataFrame "social". The .iloc indexer is used to access the DataFrame by integer-						based indexing. The : for rows means all rows, and [2, 3] for columns means the columns at index 2 and 3. 
+y=social.iloc[:, 4].values		This line selects all rows from the DataFrame "social" and the column at index 4. The .iloc indexer is used for integer-based indexing, similar to the 						previous line. The .values at the end converts the selected data into a NumPy array, which will be assigned to the variable y.
+
+print(x[:3, :])				This line prints the values of x for the first three rows and all columns. The slicing [:3, :] selects the first three rows (:3) and all columns (:) of 						the NumPy array x.
+print('_'*15)
+print(y[:3])				This line prints the values of y for the first three elements. The slicing [:3] selects the first three elements of the NumPy array y.
+
+
+5 from sklearn.model_selection import train_test_split		
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.25, random_state = 0)
+		This code performs the train-test split. The train_test_split function takes the input arrays x and y and splits them into training and testing sets. The test_size parameter is 		set to 0.25, indicating that 25% of the data will be used for testing, while the remaining 75% will be used for training. The random_state parameter is set to 0 to ensure 			reproducibility of the split.
+
+print(x_train[:3])			This line prints the values of x_train for the first three samples.
+print('_'*15)
+print(y_train[:3])
+print('_'*15)
+print(x_test[:3])
+print('_'*15)
+print(y_test[:3])
+
+6 from sklearn.preprocessing import StandardScaler
+sc_x = StandardScaler()						sc_x = StandardScaler(): This line creates an instance of the StandardScaler class and assigns it to the variable sc_x. The 											StandardScaler class is used for standardizing features by removing the mean and scaling to unit variance.
+x_train = sc_x.fit_transform(x_train)			The fit_transform method fits the scaler to the training data and then transforms it. It computes the mean and standard deviation of 									the features in the training data and scales them accordingly.
+x_test = sc_x.transform(x_test)
+
+7 print(x_train[:3])
+print('_'*15)
+print(x_test[:3])
+
+8 from sklearn.linear_model import LogisticRegression
+classifier = LogisticRegression(random_state = 0, solver='lbfgs')	the solver parameter is set to 'lbfgs', which is one of the solvers supported by logistic regression
+classifier.fit(x_train, y_train)						This line fits the logistic regression classifier to the training data. It trains the classifier using the features 												x_train and the corresponding labels y_train
+y_pred = classifier.predict(x_test)						This line makes predictions on the test data x_test using the trained classifier. The predicted labels are assigned to the 											variable y_pred.
+print(x_test[:10])
+print('_'*15)
+print(y_pred[:10])
+
+Overall, the code trains a logistic regression classifier, makes predictions on the test data, and then prints the first ten samples of the test data and the corresponding predicted labels.
+
+10 from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)	The confusion_matrix function takes the actual labels (y_test) and the predicted labels (y_pred) as input and computes the confusion matrix as a 							2D array.
+print(cm)
+							The confusion matrix provides insights into the performance of a classification model. It shows the number of true positive, true negative, false 							positive, and false negative predictions. The rows represent the actual classes, and the columns represent the predicted classes.
+
+
+11 from matplotlib.colors import ListedColormap		//This is used to create a colormap for the different regions in the plot.
+X_set, y_set = X_train, y_train				//The second line assigns the training set features to X_set and the corresponding labels to y_set.
+
+X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),		These lines create a grid of points (X1 and X2) that cover the entire 																				range of the features in the training set (X_set). The np.meshgrid 																				function is used to create this grid of points, with the specified start, 
+                     np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))		stop, and step values for each feature.
+
+plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),			This line creates a filled contour plot (contourf) based on the 																					predictions of the logistic regression classifier for the points on the 																			grid (X1 and X2). It uses classifier.predict to obtain the predicted class 																			labels for each point on the grid. The resulting predictions are reshaped 																			to match the shape of the grid (X1.shape) using reshape. The alpha 																				parameter sets the transparency level of the filled regions, and cmap 																				specifies the colormap used for the regions, with ('red', 'green') 																				representing the colors for the two classes.			
+             alpha = 0.75, cmap = ListedColormap(('red', 'green')))
+													extra - A contour plot is a graphical technique for representing a 3-dimensional surface 
+
+plt.xlim(X1.min(), X1.max())		
+plt.ylim(X2.min(), X2.max())			These lines set the limits of the x-axis and y-axis to cover the range of the grid points.
+
+for i, j in enumerate(np.unique(y_set)):
+    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],				This loop iterates over the unique values of y_set, representing the class labels. It uses scatter to plot the 													data points from X_set that correspond to each class (y_set == j).
+                c = ListedColormap(('yellow', 'green'))(i), label = j)		The label parameter is used to provide a label for each class in the legend.
+plt.title('Logistic Regression (Training set)')
+plt.xlabel('Age')
+plt.ylabel('Estimated Salary')
+plt.legend()
+plt.show()
+
+
+
+
+

@@ -1,0 +1,52 @@
+3.1import numpy as np			//NumPy is a general-purpose arrayprocessing package. It provides high-performance multidimensional array objects and
+						tools to work with the arrays. NumPy is an efficient container of generic multidimensional data.	
+3.2import pandas as pd			//Pandas is an open-source Python package that provides high-performance, easy-to-use
+						data structures and data analysis tools
+3.3import matplotlib.pyplot as plt	//You can create stories with the data visualized with Matplotlib
+3.4import seaborn as sns		// s. Putting it simply, seaborn is an extension of Matplotlib with advanced features.
+
+4 weather=pd.read_csv("weatherAUS.csv")	// for reading csv files
+
+5 weather.head(10)			// it means it shows information upto 10 rows
+
+6 weather.info()				// It shows all columns name and data types 
+
+7 weather.describe(include="all")	// The describe() function is used to generate descriptive statistics that summarize the central tendency, dispersion and shape of a dataset’s 								  distribution, excluding NaN values.
+
+8 weather.head(5)				// It show upto first five row and all column
+
+9 weather.head(n=3)
+
+10 weather.tail(5)			// It show last five row and all column	
+
+11 weather.tail(2)
+
+12 weather.index 				//The index information contains the labels of the rows. If the rows has NOT named indexes, the index property returns a RangeIndex object with the 							start, stop, and step values.
+
+13 weather.columns			//It shows all attribute of columns in index format
+
+l4 weather.shape				// Show how many row and column are there
+
+15 weather.dtypes				// Show datatype of all column
+
+16 weather.columns.values		//It shows all attribute of columns array format
+
+17 weather.describe(include="all")
+
+18 weather["Date"]			// we can access value of date attribute of column 
+
+19 weather.sort_index(axis=1,ascending=False)	// Use sort_index() function to sort the dataframe based on the column labels. Because axis=1 is used for columns
+
+20 weather.sort_values(by="MinTemp")
+
+21 weather.iloc[5] 			//select a specific row or column from the data set.
+
+22 weather[0:3]				// Start form row 0 to row 2
+
+23 weather.loc[:,["Date","Location"]]	// show two column all values
+
+24 weather.iloc[:3,:]			 // show first three rows and all column values
+
+25 weather.iloc[:,:3] 			//  show first three column and all rows  values
+
+26 weather.iloc[:3,:5]

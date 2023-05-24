@@ -1,0 +1,53 @@
+3// Prathmesh Papal
+4  emp_data.mean()		//we get all columns means separately
+
+5  emp_data.loc[:,'age'].mean()	//To find mean of specific column
+
++------------+---------+--------+
+|            |  A      |  B     |
++------------+---------+---------
+|      0     | 0.626386| 1.52325|----axis=1----->
++------------+---------+--------+
+             |         |
+             | axis=0  |
+             ↓         ↓
+
+6  emp_data.mean(axis=1)[0:4]	//  start from 0 to 3		(axis =1 means column to next column )
+
+7  emp_data.median()		//To find median of all columns
+
+8  emp_data.loc[:,'age'].median()	//To find median of specific column
+
+9  emp_data.median(axis=1)[0:4]	// To find median row wise
+
+--same
+
+15 emp_data.loc[:,'age'].min(skipna = False)
+   skipna: bool(True or False). The default value is None. If this parameter is True, it excludes all NA/null values when computing the result.
+
+16 emp_data.std()		//to find std deviation
+
+17 emp_data.loc[:,'age'].std()	//To find Standard Deviation of specific column
+
+18 emp_data.std(axis=1)[0:4]		//To find Standard Deviation row wise
+
+19 emp_data.groupby(['groups'])['age'].mean()
+
+20 emp_data_u=emp_data.rename(columns= {'salary':'Income'},inplace=False)	//change name salary to income
+  (emp_data_u.groupby(['groups']).Income.mean())
+
+21 from sklearn import preprocessing
+   enc = preprocessing.LabelEncoder()
+   emp_data['groups'] = enc.fit_transform(emp_data['groups'])
+   emp_data1=emp_data
+   emp_data
+
+22 and 23 nahi kalale
+
+IRIS
+Iris dataset contains five columns such as Petal Length, Petal Width, Sepal Length, Sepal Width and Species Type. 
+The dataset is often used in data mining, classification and clustering examples and to test algorithms.
+
+all steps like above
+
+43 -44-45 (NAHI)
